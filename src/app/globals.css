@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm near-black + paper-white palette — editorial, book-like */
+  --background: #0b0a08;
+  --background-elev: #121110;
+  --foreground: #f2ece0;
+  --foreground-muted: #8a8378;
+  --foreground-dim: #5c574f;
+  --accent: #c9a961;      /* muted gold — Waymark flavor */
+  --rule: #262320;
+
+  /* Type scale (clamp-based, fluid) */
+  --text-display: clamp(3.5rem, 9vw, 8rem);
+  --text-headline: clamp(2rem, 4.5vw, 3.75rem);
+  --text-title: clamp(1.25rem, 2vw, 1.75rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.75rem;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-elev: var(--background-elev);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-dim: var(--foreground-dim);
+  --color-accent: var(--accent);
+  --color-rule: var(--rule);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-fraunces);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+/* Subtle grain overlay — film feel, not noisy */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+}
+
+.serif {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+  font-feature-settings: "ss01";
+  letter-spacing: -0.02em;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+
+.rule {
+  border-color: var(--rule);
+}
+
+/* Link underline that doesn't look like a link */
+.link-understated {
+  text-decoration: underline;
+  text-decoration-color: var(--foreground-dim);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 200ms ease;
+}
+.link-understated:hover {
+  text-decoration-color: var(--accent);
 }
