@@ -5,7 +5,6 @@ import { use, useState } from "react";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import Nav from "@/components/Nav";
-import Placeholder from "@/components/Placeholder";
 import DeviceFrame from "@/components/DeviceFrame";
 import { projects, type Screen } from "@/content/projects";
 
@@ -17,32 +16,6 @@ const fadeUp: Variants = {
     transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
-
-function AssetImage({
-  aspect,
-  placeholderLabel,
-  note,
-}: {
-  src?: string;
-  alt?: string;
-  aspect: "video" | "screen" | "wide" | "square";
-  placeholderLabel: string;
-  note?: string;
-}) {
-  return (
-    <div className="relative w-full">
-      <Placeholder label={placeholderLabel} aspect={aspect} />
-      {note && (
-        <p
-          className="mono text-[11px] mt-3 leading-relaxed"
-          style={{ color: "var(--foreground-dim)", maxWidth: "68ch" }}
-        >
-          <span style={{ color: "var(--waymark-gold)" }}>RECORD:</span> {note}
-        </p>
-      )}
-    </div>
-  );
-}
 
 // Section head. Same pattern as the homepage. No numerals.
 function BeatHead({
@@ -226,7 +199,7 @@ export default function CaseStudy({
 
       {/* ── 01 · SIGNAL (problem) ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16 items-start">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -234,28 +207,9 @@ export default function CaseStudy({
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <BeatHead process="Signal · the problem" title={project.problem.headline} accent={accent} />
-            <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "52ch" }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "72ch" }}>
               {project.problem.body}
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          >
-            <AssetImage
-              src={`${assetBase}/before.png`}
-              alt="Before state"
-              aspect="wide"
-              placeholderLabel={`before.png · the mess this replaces`}
-              note={`Drop a screenshot of the broken state at public/assets/${project.slug}/before.png. ${
-                project.slug === "sygnalist"
-                  ? "A chaotic Gmail inbox full of LinkedIn alerts and Greenhouse digests."
-                  : "A generic training app still showing the old plan after a missed week."
-              }`}
-            />
           </motion.div>
         </div>
       </section>
@@ -268,31 +222,11 @@ export default function CaseStudy({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-12"
           >
             <BeatHead process="Read · the approach" title={project.approach.headline} accent={accent} />
             <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "72ch" }}>
               {project.approach.body}
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          >
-            <AssetImage
-              src={`${assetBase}/architecture.png`}
-              alt="Architecture diagram"
-              aspect="wide"
-              placeholderLabel={`architecture.png · how the system actually flows`}
-              note={`Draw the architecture on paper and photo it, or use excalidraw.com. Drop at public/assets/${project.slug}/architecture.png. ${
-                project.slug === "sygnalist"
-                  ? "Show the ten sources fanning in, the enrichment layer, the scorer, and the ranked inbox."
-                  : "Show signals in (Strava, wellness), the pre-filter gate, Sonnet with tool use, and weekAdjustments out."
-              }`}
-            />
           </motion.div>
         </div>
       </section>
@@ -301,17 +235,6 @@ export default function CaseStudy({
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto">
           <BeatHead process="Build · the product" title={project.product.headline} accent={accent} />
-
-          {/* Walkthrough video slot with explicit recording script */}
-          <div className="my-12">
-            <AssetImage
-              src={`${assetBase}/walkthrough.mp4`}
-              alt="Walkthrough"
-              aspect="video"
-              placeholderLabel={`walkthrough.mp4 · 30 to 60s product recording`}
-              note={project.product.recordingScript}
-            />
-          </div>
 
           {/* Featured screens, interleaved at full width (browser) or larger (phone) */}
           {isPhone ? (

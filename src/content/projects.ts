@@ -16,18 +16,14 @@ export type Project = {
   problem: {
     headline: string;
     body: string;
-    beforeImage?: string;
   };
   approach: {
     headline: string;
     body: string;
-    architectureImage?: string;
   };
   product: {
     headline: string;
     screens: Screen[];
-    videoFile?: string;
-    recordingScript?: string;
   };
   tools: {
     headline: string;
@@ -66,13 +62,11 @@ export const projects: Project[] = [
       headline: "Job hunting is broken. Everyone knows. Nobody fixes it.",
       body:
         "Aggregator emails. LinkedIn alerts. Direct pitches. Newsletter roll-ups. A job seeker burns the evening sorting the pile, scoring fit against their own profile, tracking who is worth applying to and who is noise. Most tools that claim to help add more noise. I watched people around me lose whole weekends to this and decided the pattern deserved a rebuild. So I built the radar. For them.",
-      beforeImage: "before.png",
     },
     approach: {
       headline: "Ten sources. One ranked inbox. One click to apply.",
       body:
-        "Sygnalist pulls from ten sources in one fetch. Remotive, RemoteOK, Jooble (which back-feeds Indeed, Monster, Glassdoor), Adzuna US, Adzuna Canada, USAJobs, plus a gated RapidAPI fallback for JSearch, LinkedIn last-7-days, and an ATS feed when the primary sources come back thin. A Gmail newsletter parser catches the rest: LinkedIn alerts, Greenhouse, Lever, Workday, Ashby, Breezy, Jobvite, iCIMS, SmartRecruiters. Each source has its own adapter with a request builder, response parser, and company-name normaliser. All of it runs behind one law: no scheduled jobs, no onEdit calling external APIs, every action manual and visible. A user triggers a fetch. Twenty-five OpenAI enrichment requests fan out in parallel. A rule-based scorer applies hard disqualifiers and soft weights. Every job gets tiered S through X. The user sees one ranked inbox. Multi-profile from day one: one Engine Workbook as system of record, each user gets their own Portal sheet mirrored from it.",
-      architectureImage: "architecture.png",
+        "Sygnalist pulls from ten sources in one fetch. Remotive, RemoteOK, Jooble (which back-feeds Indeed, Monster, Glassdoor), Adzuna US, Adzuna Canada, USAJobs, plus a gated RapidAPI fallback for JSearch, LinkedIn last-7-days, and an ATS feed when the primary sources come back thin. A Gmail newsletter parser catches the rest: LinkedIn alerts, Greenhouse, Lever, Workday, Ashby, Breezy, Jobvite, iCIMS, SmartRecruiters. Each source has its own adapter with a request builder, response parser, and company-name normaliser. All of it runs behind one law: no scheduled jobs, no hidden triggers, every action manual and visible. A user triggers a fetch. Twenty-five OpenAI enrichment requests fan out in parallel. A rule-based scorer applies hard disqualifiers and soft weights. Every job gets tiered S through X. The user sees one ranked inbox. Multi-profile from day one: one workbook as system of record, each user gets their own portal mirrored from it.",
     },
     product: {
       headline: "Three surfaces. One source of truth.",
@@ -87,9 +81,6 @@ export const projects: Project[] = [
         { file: "09.png", caption: "Profile. Role lanes, hard disqualifiers, resume parse, score weights. The tuning layer per client." },
         { file: "08.png", caption: "Tickets + OPS. Support surface inside admin, created and updated, status-grouped alongside live client metrics." },
       ],
-      videoFile: "walkthrough.mp4",
-      recordingScript:
-        "Record 45 to 60 seconds, logged in as Luther Bocas. Start on empty Inbox. Trigger a fetch. Cards come in ranked. Click one, expand the why-fit reasoning. Promote to Tracker. Flip a stage. End on Admin OPS with health metrics visible. QuickTime screen recording, 1440x900. Drop at public/assets/sygnalist/walkthrough.mp4.",
     },
     tools: {
       headline: "Ten APIs. Full stack. One ranked inbox.",
@@ -142,13 +133,11 @@ export const projects: Project[] = [
       headline: "Every training app assumes the plan is the truth.",
       body:
         "The plan is never the truth. Sleep was short. Soreness hit four out of five. HR drifted high on what was supposed to be a Zone 2 run. You skipped Tuesday, doubled Wednesday, ran harder than prescribed, ran without the strap. Every app ignores all of that and keeps rendering the old schedule like nothing happened. Then marks you as behind. The pattern tells the truth, not the plan.",
-      beforeImage: "before.png",
     },
     approach: {
       headline: "Read everything. Say nothing. Move the week.",
       body:
         "Every workout logged, every run from Strava, every wellness entry feeds one continuous signal bundle. HR zones per split pulled from Strava webhooks and polling. Pace drift against prescribed targets. Type divergence when you did Muay Thai instead of strength. Soreness scores, sleep hours, RPE, athlete notes, block adherence, last-2-hour history. Five event types fire into the reactive layer: session completed, skipped, replaced, wellness logged, nightly rollover. A pre-filter gate decides if there is real signal worth a model call. If yes, the bundle goes to Claude Sonnet 4.6 with a cached system prompt, interleaved thinking enabled, mandatory tool use, a 512-token output ceiling. The model returns one structured action: move, swap, reduce intensity, add recovery, hold. A two-hour debounce prevents second-guessing. The change writes to weekAdjustments with status accepted. No push. No toast. No badge. You see the new plan the next time you open the app.",
-      architectureImage: "architecture.png",
     },
     product: {
       headline: "A coach on the lock screen. Music still playing.",
@@ -160,9 +149,6 @@ export const projects: Project[] = [
         { file: "05.png", caption: "Body Metrics. Weight, resting HR, bodyfat, morning notes. One commit per day, history on the same card." },
         { file: "06.png", caption: "Settings. 7 days until redeploy, MT class day calendar, morning alarm, bag work technique chips by category." },
       ],
-      videoFile: "walkthrough.mp4",
-      recordingScript:
-        "iOS screen recording, 30 to 45 seconds. Open to Today with morning report filled. Tap LOG on a session. Let the transition play. Swipe to Program and show Block Zero week grid. Swipe to Ledger and show 8 of 12 complete. If Live Activity is firing, end on lock screen. Drop at public/assets/waymark/walkthrough.mp4.",
     },
     tools: {
       headline: "Edge-first backend. Native where it counts.",

@@ -106,12 +106,12 @@ export default function DeviceFrame({
       <div
         style={{
           position: "relative",
-          aspectRatio: "16 / 10",
+          aspectRatio: "2880 / 1454",
           background: "var(--sygnalist-bg)",
         }}
       >
         {src ? (
-          <Image src={src} alt={alt} fill className="object-cover" sizes="(min-width: 768px) 600px, 100vw" />
+          <Image src={src} alt={alt} fill className="object-contain" sizes="(min-width: 768px) 600px, 100vw" />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-4 text-center">
             <span
