@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Warm near-black + paper-white palette — editorial, book-like */
+  /* Warm near-black + paper-white palette. Editorial, book-like. */
   --background: #0b0a08;
   --background-elev: #121110;
   --foreground: #f2ece0;
   --foreground-muted: #8a8378;
   --foreground-dim: #5c574f;
-  --accent: #c9a961;      /* muted gold — Waymark flavor */
+  --accent: #c9a961;      /* muted gold, Waymark flavor */
   --rule: #262320;
 
   /* Type scale (clamp-based, fluid) */
@@ -50,7 +50,7 @@ body {
   color: var(--background);
 }
 
-/* Subtle grain overlay — film feel, not noisy */
+/* Subtle grain overlay. Film feel, not noisy. */
 .grain::before {
   content: "";
   position: fixed;

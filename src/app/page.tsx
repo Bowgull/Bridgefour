@@ -26,7 +26,7 @@ export default function Home() {
 
           {/* Split voice */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mb-20">
-            {/* Left — Sygnalist */}
+            {/* Left: Sygnalist */}
             <motion.div
               initial="hidden"
               animate="visible"
@@ -55,7 +55,7 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* Right — Waymark */}
+            {/* Right: Waymark */}
             <motion.div
               initial="hidden"
               animate="visible"
@@ -140,7 +140,7 @@ export default function Home() {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
               >
                 <Link href={`/work/${project.slug}`} className="group block">
-                  {/* Hero image slot — drop public/assets/[slug]/hero.png to fill */}
+                  {/* Hero image slot: drop public/assets/[slug]/hero.png to fill */}
                   <div
                     className="w-full aspect-[4/3] mb-5 overflow-hidden rounded-sm flex flex-col items-center justify-center gap-1"
                     style={{ background: "var(--background-elev)", border: "1px dashed var(--foreground-dim)" }}
@@ -202,6 +202,58 @@ export default function Home() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ── EXPERIENCE ── */}
+      <section className="px-6 py-20" style={{ borderTop: "1px solid var(--rule)" }}>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-12">
+          <div>
+            <p className="mono text-xs tracking-widest uppercase" style={{ color: "var(--foreground-dim)" }}>
+              Selected roles
+            </p>
+          </div>
+          <ul className="space-y-8">
+            {site.experience.map((job, i) => (
+              <motion.li
+                key={`${job.company}-${i}`}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.06 }}
+                className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8"
+              >
+                <p
+                  className="mono text-xs tracking-wider shrink-0 pt-1"
+                  style={{ color: "var(--foreground-dim)" }}
+                >
+                  {job.period}
+                </p>
+                <div>
+                  <p
+                    className="serif mb-1"
+                    style={{ fontSize: "var(--text-title)", color: "var(--foreground)", lineHeight: 1.2 }}
+                  >
+                    {job.role}
+                    <span style={{ color: "var(--foreground-dim)" }}> / </span>
+                    <span style={{ color: "var(--foreground-muted)", fontSize: "calc(var(--text-title) * 0.88)" }}>
+                      {job.company}
+                    </span>
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "var(--text-small)",
+                      color: "var(--foreground-muted)",
+                      lineHeight: 1.6,
+                      maxWidth: "64ch",
+                    }}
+                  >
+                    {job.summary}
+                  </p>
+                </div>
               </motion.li>
             ))}
           </ul>

@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Bridge Four. Lindsay Bell.",
+  title: "Bridge Four. Josh Bocase.",
   description:
     "Two AI products. One for the job I have. One for the life I want. Built by one person.",
 };

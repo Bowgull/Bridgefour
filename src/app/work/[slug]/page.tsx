@@ -130,7 +130,7 @@ export default function CaseStudy({
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-              01 — The problem
+              01 / The problem
             </p>
             <h2
               className="serif mb-6"
@@ -170,7 +170,7 @@ export default function CaseStudy({
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-                02 — The approach
+                02 / The approach
               </p>
               <h2
                 className="serif mb-6"
@@ -184,7 +184,7 @@ export default function CaseStudy({
             </motion.div>
           </div>
 
-          {/* Architecture diagram — full width */}
+          {/* Architecture diagram, full width */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -208,7 +208,7 @@ export default function CaseStudy({
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto">
           <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-            03 — The product
+            03 / The product
           </p>
           <h2
             className="serif mb-12"
@@ -263,7 +263,7 @@ export default function CaseStudy({
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16">
           <div>
             <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-              04 — What I used
+              04 / What I used
             </p>
             <h2
               className="serif mb-6"
@@ -294,7 +294,7 @@ export default function CaseStudy({
       <section className="px-6 py-20">
         <div className="max-w-6xl mx-auto">
           <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-            05 — What it proves
+            05 / What it proves
           </p>
 
           {project.proof.stat && (
