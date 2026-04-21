@@ -11,10 +11,18 @@ export default function Nav() {
     >
       <Link
         href="/"
-        className="mono text-xs tracking-widest uppercase"
-        style={{ color: "var(--foreground-muted)" }}
+        className="display text-sm flex items-center gap-2"
+        style={{ color: "var(--foreground)", letterSpacing: "0.18em" }}
       >
-        {site.domain}
+        <span
+          aria-hidden
+          style={{
+            width: 7, height: 7, borderRadius: 999,
+            background: "var(--waymark-gold)",
+            boxShadow: "0 0 10px var(--waymark-gold)",
+          }}
+        />
+        Bridge Four
       </Link>
 
       <nav className="flex items-center gap-6">
@@ -23,7 +31,7 @@ export default function Nav() {
           className="mono text-xs tracking-widest uppercase link-understated"
           style={{ color: "var(--foreground-muted)" }}
         >
-          Work
+          Shipped
         </Link>
         <Link
           href={site.author.github}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Fraunces } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces, Cinzel } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,8 +18,14 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT"],
 });
 
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+});
+
 export const metadata: Metadata = {
-  title: "Bridge Four. Josh Bocase.",
+  title: "Bridge Four. Josh Bocas.",
   description:
     "Two AI products. One for the job I have. One for the life I want. Built by one person.",
 };
@@ -32,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${cinzel.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col grain">{children}</body>
     </html>

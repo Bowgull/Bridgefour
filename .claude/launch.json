@@ -6,6 +6,18 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "sygnalist",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/lindsaybell/Developer/sygnalist-brain/app && npm run dev -- -p 3002"],
+      "port": 3002
+    },
+    {
+      "name": "waymark",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/lindsaybell/Developer/Waymark && npm run dev -- --port 3003"],
+      "port": 3003
     }
   ]
 }

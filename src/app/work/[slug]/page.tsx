@@ -1,42 +1,139 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { use } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Nav from "@/components/Nav";
 import Placeholder from "@/components/Placeholder";
-import { projects } from "@/content/projects";
+import DeviceFrame from "@/components/DeviceFrame";
+import { projects, type Screen } from "@/content/projects";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
 function AssetImage({
-  src,
-  alt,
   aspect,
   placeholderLabel,
+  note,
 }: {
-  src: string;
-  alt: string;
+  src?: string;
+  alt?: string;
   aspect: "video" | "screen" | "wide" | "square";
   placeholderLabel: string;
+  note?: string;
 }) {
-  // If the file has been dropped into public/, render it; otherwise show placeholder
   return (
     <div className="relative w-full">
       <Placeholder label={placeholderLabel} aspect={aspect} />
-      {/* Once you drop the real file in, swap Placeholder for:
-          <Image src={src} alt={alt} fill className="object-cover rounded-sm" />
-          wrapped in a relative container */}
+      {note && (
+        <p
+          className="mono text-[11px] mt-3 leading-relaxed"
+          style={{ color: "var(--foreground-dim)", maxWidth: "68ch" }}
+        >
+          <span style={{ color: "var(--waymark-gold)" }}>RECORD:</span> {note}
+        </p>
+      )}
     </div>
+  );
+}
+
+// Section head. Same pattern as the homepage. No numerals.
+function BeatHead({
+  process,
+  title,
+  accent,
+}: {
+  process: string;
+  title: string;
+  accent: string;
+}) {
+  return (
+    <div className="mb-8">
+      <div className="flex items-center gap-4 mb-5">
+        <span
+          className="mono text-[10px] tracking-[0.25em] uppercase"
+          style={{ color: accent, opacity: 0.9 }}
+        >
+          {process}
+        </span>
+        <span
+          aria-hidden
+          style={{
+            flex: 1,
+            height: 1,
+            background: `linear-gradient(90deg, ${accent}55, transparent)`,
+          }}
+        />
+      </div>
+      <h2
+        className="serif"
+        style={{
+          fontSize: "clamp(1.75rem, 3.4vw, 2.75rem)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "var(--foreground)",
+        }}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+function FeaturedScreen({
+  screen,
+  slug,
+  accent,
+  isPhone,
+}: {
+  screen: Screen;
+  slug: string;
+  accent: string;
+  isPhone: boolean;
+}) {
+  const tintClass = isPhone ? "tint-waymark" : "tint-sygnalist";
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="my-12"
+    >
+      <div
+        className={`${tintClass} rounded-sm`}
+        style={{
+          border: "1px solid var(--rule)",
+          padding: isPhone ? "40px" : "28px",
+        }}
+      >
+        <DeviceFrame
+          kind={isPhone ? "phone" : "browser"}
+          src={`/assets/${slug}/screens/${screen.file}`}
+          alt={screen.caption}
+          accent={accent}
+          hideChrome={!isPhone}
+        />
+      </div>
+      <p
+        className="mt-5"
+        style={{
+          fontSize: "var(--text-small)",
+          color: "var(--foreground-muted)",
+          lineHeight: 1.6,
+          maxWidth: "68ch",
+        }}
+      >
+        {screen.caption}
+      </p>
+    </motion.div>
   );
 }
 
@@ -50,6 +147,11 @@ export default function CaseStudy({
   if (!project) notFound();
 
   const assetBase = `/assets/${project.slug}`;
+  const isPhone = project.slug === "waymark";
+  const accent = isPhone ? "var(--waymark-gold)" : "var(--sygnalist-green)";
+  const featuredScreens = project.product.screens.filter((s) => s.featured);
+  const restScreens = project.product.screens.filter((s) => !s.featured);
+  const [showMore, setShowMore] = useState(false);
 
   return (
     <main>
@@ -67,16 +169,19 @@ export default function CaseStudy({
               ← Work
             </Link>
 
-            <p
-              className="mono text-xs tracking-widest uppercase mb-6 mt-8"
-              style={{ color: "var(--foreground-dim)" }}
-            >
+            <span className={`eyebrow-chip ${project.slug === "sygnalist" ? "green" : ""} mt-8 mb-6`}>
+              <span className="dot" />
               {project.status}
-            </p>
+            </span>
 
             <h1
-              className="serif mb-6"
-              style={{ fontSize: "var(--text-display)", lineHeight: 1.05, color: "var(--foreground)" }}
+              className="display mb-6 mt-4"
+              style={{
+                fontSize: "clamp(3rem, 9vw, 7rem)",
+                letterSpacing: "0.04em",
+                lineHeight: 1,
+                color: "var(--foreground)",
+              }}
             >
               {project.title}
             </h1>
@@ -93,7 +198,6 @@ export default function CaseStudy({
             </p>
           </motion.div>
 
-          {/* Metadata row */}
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-14 pt-8"
             style={{ borderTop: "1px solid var(--rule)" }}
@@ -120,24 +224,16 @@ export default function CaseStudy({
         </div>
       </section>
 
-      {/* ── BEAT 1: THE PROBLEM ── */}
+      {/* ── 01 · SIGNAL (problem) ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16 items-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-              01 / The problem
-            </p>
-            <h2
-              className="serif mb-6"
-              style={{ fontSize: "var(--text-headline)", lineHeight: 1.1, color: "var(--foreground)" }}
-            >
-              {project.problem.headline}
-            </h2>
+            <BeatHead process="Signal · the problem" title={project.problem.headline} accent={accent} />
             <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "52ch" }}>
               {project.problem.body}
             </p>
@@ -153,38 +249,33 @@ export default function CaseStudy({
               src={`${assetBase}/before.png`}
               alt="Before state"
               aspect="wide"
-              placeholderLabel={`public/assets/${project.slug}/before.png`}
+              placeholderLabel={`before.png · the mess this replaces`}
+              note={`Drop a screenshot of the broken state at public/assets/${project.slug}/before.png. ${
+                project.slug === "sygnalist"
+                  ? "A chaotic Gmail inbox full of LinkedIn alerts and Greenhouse digests."
+                  : "A generic training app still showing the old plan after a missed week."
+              }`}
             />
           </motion.div>
         </div>
       </section>
 
-      {/* ── BEAT 2: THE APPROACH ── */}
+      {/* ── 02 · READ (approach) ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16 items-start mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-                02 / The approach
-              </p>
-              <h2
-                className="serif mb-6"
-                style={{ fontSize: "var(--text-headline)", lineHeight: 1.1, color: "var(--foreground)" }}
-              >
-                {project.approach.headline}
-              </h2>
-              <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75 }}>
-                {project.approach.body}
-              </p>
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-12"
+          >
+            <BeatHead process="Read · the approach" title={project.approach.headline} accent={accent} />
+            <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "72ch" }}>
+              {project.approach.body}
+            </p>
+          </motion.div>
 
-          {/* Architecture diagram, full width */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -195,88 +286,124 @@ export default function CaseStudy({
               src={`${assetBase}/architecture.png`}
               alt="Architecture diagram"
               aspect="wide"
-              placeholderLabel={`public/assets/${project.slug}/architecture.png`}
+              placeholderLabel={`architecture.png · how the system actually flows`}
+              note={`Draw the architecture on paper and photo it, or use excalidraw.com. Drop at public/assets/${project.slug}/architecture.png. ${
+                project.slug === "sygnalist"
+                  ? "Show the ten sources fanning in, the enrichment layer, the scorer, and the ranked inbox."
+                  : "Show signals in (Strava, wellness), the pre-filter gate, Sonnet with tool use, and weekAdjustments out."
+              }`}
             />
-            <p className="mono text-xs mt-3" style={{ color: "var(--foreground-dim)" }}>
-              System architecture
-            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* ── BEAT 3: THE PRODUCT ── */}
+      {/* ── 03 · BUILD (product) ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto">
-          <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-            03 / The product
-          </p>
-          <h2
-            className="serif mb-12"
-            style={{ fontSize: "var(--text-headline)", lineHeight: 1.1, color: "var(--foreground)" }}
-          >
-            {project.product.headline}
-          </h2>
+          <BeatHead process="Build · the product" title={project.product.headline} accent={accent} />
 
-          {/* Walkthrough video */}
-          <div className="mb-12">
+          {/* Walkthrough video slot with explicit recording script */}
+          <div className="my-12">
             <AssetImage
               src={`${assetBase}/walkthrough.mp4`}
               alt="Walkthrough"
               aspect="video"
-              placeholderLabel={`public/assets/${project.slug}/walkthrough.mp4`}
+              placeholderLabel={`walkthrough.mp4 · 30 to 60s product recording`}
+              note={project.product.recordingScript}
             />
-            <p className="mono text-xs mt-3" style={{ color: "var(--foreground-dim)" }}>
-              Product walkthrough
-            </p>
           </div>
 
-          {/* 3 screens */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {project.product.screens.map((screen, i) => (
-              <motion.div
-                key={screen.file}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-              >
-                <AssetImage
-                  src={`${assetBase}/screens/${screen.file}`}
-                  alt={screen.caption}
-                  aspect={project.slug === "waymark" ? "screen" : "wide"}
-                  placeholderLabel={`public/assets/${project.slug}/screens/${screen.file}`}
+          {/* Featured screens, interleaved at full width (browser) or larger (phone) */}
+          {isPhone ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
+              {featuredScreens.map((screen) => (
+                <FeaturedScreen
+                  key={screen.file}
+                  screen={screen}
+                  slug={project.slug}
+                  accent={accent}
+                  isPhone
                 />
-                <p
-                  className="mt-3"
-                  style={{ fontSize: "var(--text-small)", color: "var(--foreground-muted)", lineHeight: 1.5 }}
+              ))}
+            </div>
+          ) : (
+            <div>
+              {featuredScreens.map((screen) => (
+                <FeaturedScreen
+                  key={screen.file}
+                  screen={screen}
+                  slug={project.slug}
+                  accent={accent}
+                  isPhone={false}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Rest of the screens, collapsed by default */}
+          {restScreens.length > 0 && (
+            <div className="mt-12 pt-10" style={{ borderTop: "1px solid var(--rule)" }}>
+              <button
+                onClick={() => setShowMore((v) => !v)}
+                className="mono text-xs tracking-[0.2em] uppercase link-understated"
+                style={{ color: "var(--foreground-muted)" }}
+              >
+                {showMore ? "Hide" : "Show"} {restScreens.length} more surface{restScreens.length === 1 ? "" : "s"} ↓
+              </button>
+
+              {showMore && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className={`grid grid-cols-1 md:grid-cols-2 ${isPhone ? "lg:grid-cols-3" : ""} gap-6 mt-8`}
                 >
-                  {screen.caption}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+                  {restScreens.map((screen, i) => (
+                    <motion.div
+                      key={screen.file}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: i * 0.05 }}
+                      className="flex flex-col"
+                    >
+                      <div
+                        className={isPhone ? "tint-waymark rounded-sm p-5" : "tint-sygnalist rounded-sm p-4"}
+                        style={{ border: "1px solid var(--rule)" }}
+                      >
+                        <DeviceFrame
+                          kind={isPhone ? "phone" : "browser"}
+                          src={`${assetBase}/screens/${screen.file}`}
+                          alt={screen.caption}
+                          accent={accent}
+                          hideChrome={!isPhone}
+                        />
+                      </div>
+                      <p
+                        className="mt-4"
+                        style={{ fontSize: "var(--text-small)", color: "var(--foreground-muted)", lineHeight: 1.55 }}
+                      >
+                        {screen.caption}
+                      </p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* ── BEAT 4: TOOLS ── */}
+      {/* ── 04 · TOOLS ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16">
           <div>
-            <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-              04 / What I used
-            </p>
-            <h2
-              className="serif mb-6"
-              style={{ fontSize: "var(--text-headline)", lineHeight: 1.1, color: "var(--foreground)" }}
-            >
-              {project.tools.headline}
-            </h2>
+            <BeatHead process="Tools · what I used" title={project.tools.headline} accent={accent} />
             <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75 }}>
               {project.tools.body}
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2 content-start pt-14">
+          <div className="flex flex-wrap gap-2 content-start pt-10">
             {project.stack.map((tech) => (
               <span
                 key={tech}
@@ -290,33 +417,30 @@ export default function CaseStudy({
         </div>
       </section>
 
-      {/* ── BEAT 5: THE PROOF ── */}
+      {/* ── 05 · PROOF ── */}
       <section className="px-6 py-20">
         <div className="max-w-6xl mx-auto">
-          <p className="mono text-xs tracking-widest uppercase mb-6" style={{ color: "var(--foreground-dim)" }}>
-            05 / What it proves
-          </p>
+          <BeatHead process="Proof · what it shows" title={project.proof.headline} accent={accent} />
 
           {project.proof.stat && (
-            <div className="mb-10">
+            <div className="mb-12">
               <p
-                className="serif"
-                style={{ fontSize: "var(--text-display)", lineHeight: 1, color: "var(--accent)" }}
+                className="display"
+                style={{
+                  fontSize: "clamp(3.5rem, 10vw, 7rem)",
+                  lineHeight: 1,
+                  letterSpacing: "0.02em",
+                  color: accent,
+                }}
               >
                 {project.proof.stat}
               </p>
-              <p className="mono text-xs mt-2" style={{ color: "var(--foreground-dim)" }}>
+              <p className="mono text-xs mt-3 tracking-widest" style={{ color: "var(--foreground-dim)" }}>
                 {project.proof.statLabel}
               </p>
             </div>
           )}
 
-          <p
-            className="serif mb-8"
-            style={{ fontSize: "var(--text-headline)", lineHeight: 1.15, color: "var(--foreground)", maxWidth: "22ch" }}
-          >
-            {project.proof.headline}
-          </p>
           <p
             style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "60ch" }}
           >
@@ -350,3 +474,4 @@ export default function CaseStudy({
     </main>
   );
 }
+

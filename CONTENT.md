@@ -90,17 +90,23 @@ Or just tell me what you've dropped in and I'll swap it for you. That's faster.
 | `walkthrough.mp4` | 45-60s screen recording | Cmd+Shift+5 (Mac) for Sygnalist; QuickTime → New Movie Recording → iPhone for Waymark |
 | `screens/01-03.png` | Your 3 best product screens | Screenshots from the app/browser |
 
-### Walkthrough script — Sygnalist
-- 0–10s: Gmail inbox. Caption: "Recruitment runs on email. It's chaos."
-- 10–30s: Email arrives → sidebar parses it → candidate card fills in → score appears
-- 30–45s: Admin portal, filters, client portal
-- 45–60s: End on the cleanest screen
+### Exact screenshots to capture (based on the real deployed UI)
 
-### Walkthrough script — Waymark
-- 0–10s: A blown-up training plan / skipped session. Caption: "Plans don't survive contact with real life."
-- 10–30s: Week view, a workout, coach adjusting
-- 30–45s: Reactive moment — skip fires, plan updates silently
-- 45–60s: End on the lock screen Live Activity
+**Waymark** — mobile viewport, 375px wide (use Safari → Develop → Enter Responsive Design Mode, or browser devtools). Cmd+Shift+4+Space captures a window; use Cmd+Shift+5 → "Capture Selected Portion" for the phone frame only.
+- `hero.png` — Today page with "MORNING REPORT" filled in (sleep 7hrs, soreness slider active, big gold LOG button visible)
+- `screens/01.png` — Today page: Morning Report + Waybook card + first AM session "Mobility" card
+- `screens/02.png` — Program page: "BLOCK ZERO" card at top + Week 1 grid showing Tue–Sun with Foundation Run, Mobility, Strength: Pull, Bag Work, Reset session chips
+- `screens/03.png` — Ledger: CompletionRings showing "8 OF 12", the "~ NEW PR on Bulgarian Split Squat" callout, WEEK/MONTH/SEASON toggle
+
+**Sygnalist** — desktop viewport (that's where it shines). Use Cmd+Shift+4+Space on the window.
+- `hero.png` — Inbox with 6–10 job cards sorted by score, tier chips (S/A/B/C) visible, radar-green accents
+- `screens/01.png` — Inbox top-down: filters bar (Role/Lane/Work Mode), score chips, salary, why-fit preview
+- `screens/02.png` — Tracker: stage-colored pipeline chips (Prospect → Applied → Interviewed → Final → Offer)
+- `screens/03.png` — Admin dashboard: profile switcher, metrics tiles, logs panel
+
+For `walkthrough.mp4` (optional — Cmd+Shift+5 → "Record Selected Portion", 45–60s):
+- Waymark: Today → hit LOG → watch session transition → Program week view → session card → back to Today. End on lock screen if you can get Live Activity firing.
+- Sygnalist: Empty Inbox → trigger fetch → cards fly in ranked → click one → why-fit reasoning expands → promote to Tracker → stage flips.
 
 ---
 
