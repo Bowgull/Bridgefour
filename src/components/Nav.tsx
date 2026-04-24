@@ -1,20 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
+
+const DISMISS_THRESHOLD_PX = 80;
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [dragY, setDragY] = useState(0);
+  const touchStartY = useRef<number | null>(null);
+
+  const close = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    setDragY(0);
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (touchStartY.current == null) return;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    setDragY(dy < 0 ? dy / 4 : dy);
+  };
+  const onTouchEnd = () => {
+    if (dragY > DISMISS_THRESHOLD_PX) {
+      setOpen(false);
+    }
+    setDragY(0);
+    touchStartY.current = null;
+  };
 
   return (
     <header
@@ -23,9 +51,9 @@ export default function Nav() {
     >
       <Link
         href="/"
-        className="display text-sm flex items-center gap-2"
-        style={{ color: "var(--foreground)", letterSpacing: "0.18em" }}
-        onClick={() => setOpen(false)}
+        className="display text-sm flex items-center gap-2 relative"
+        style={{ color: "var(--foreground)", letterSpacing: "0.18em", zIndex: 50 }}
+        onClick={close}
       >
         <span
           aria-hidden
@@ -38,7 +66,6 @@ export default function Nav() {
         Bridge Four
       </Link>
 
-      {/* Desktop nav — unchanged from original at md+ breakpoint */}
       <nav className="hidden md:flex items-center gap-6">
         <Link
           href="/#work"
@@ -77,15 +104,23 @@ export default function Nav() {
         </a>
       </nav>
 
-      {/* Mobile hamburger — only renders < md */}
       <button
         type="button"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         onClick={() => setOpen((v) => !v)}
-        className="md:hidden flex items-center justify-center p-2 -mr-2"
-        style={{ color: "var(--foreground)" }}
+        className="md:hidden relative flex items-center justify-center"
+        style={{
+          color: "var(--foreground)",
+          width: 44,
+          height: 44,
+          borderRadius: 999,
+          border: `1px solid ${open ? "var(--accent)" : "transparent"}`,
+          background: open ? "var(--background-elev)" : "transparent",
+          transition: "border-color 220ms ease, background 220ms ease",
+          zIndex: 50,
+        }}
       >
         <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
         <span
@@ -93,8 +128,8 @@ export default function Nav() {
           style={{
             position: "relative",
             display: "inline-block",
-            width: 22,
-            height: 14,
+            width: 18,
+            height: 12,
           }}
         >
           <span
@@ -102,11 +137,12 @@ export default function Nav() {
               position: "absolute",
               left: 0,
               right: 0,
-              top: open ? 6 : 0,
-              height: 1,
+              top: open ? 5 : 0,
+              height: 2,
+              borderRadius: 2,
               background: "currentColor",
               transform: open ? "rotate(45deg)" : "none",
-              transition: "transform 200ms ease, top 200ms ease",
+              transition: "transform 220ms ease, top 220ms ease",
             }}
           />
           <span
@@ -114,8 +150,9 @@ export default function Nav() {
               position: "absolute",
               left: 0,
               right: 0,
-              top: 6,
-              height: 1,
+              top: 5,
+              height: 2,
+              borderRadius: 2,
               background: "currentColor",
               opacity: open ? 0 : 1,
               transition: "opacity 150ms ease",
@@ -126,45 +163,74 @@ export default function Nav() {
               position: "absolute",
               left: 0,
               right: 0,
-              top: open ? 6 : 13,
-              height: 1,
+              top: open ? 5 : 10,
+              height: 2,
+              borderRadius: 2,
               background: "currentColor",
               transform: open ? "rotate(-45deg)" : "none",
-              transition: "transform 200ms ease, top 200ms ease",
+              transition: "transform 220ms ease, top 220ms ease",
             }}
           />
         </span>
       </button>
 
-      {/* Mobile panel — only renders < md */}
+      <div
+        className="md:hidden"
+        aria-hidden={!open}
+        onClick={close}
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(11, 10, 8, 0.55)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          zIndex: 30,
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 220ms ease",
+        }}
+      />
+
       <div
         id="mobile-nav-panel"
         className="md:hidden"
+        role="dialog"
+        aria-modal="true"
         aria-hidden={!open}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
         style={{
           position: "fixed",
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          height: "72vh",
           background: "var(--background)",
+          borderBottom: "1px solid var(--rule)",
+          boxShadow: "0 24px 48px -24px rgba(0, 0, 0, 0.6)",
           zIndex: 40,
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
-          transition: "opacity 220ms ease",
+          transform: open
+            ? `translateY(${dragY}px)`
+            : "translateY(-100%)",
+          transition: touchStartY.current
+            ? "none"
+            : "transform 280ms cubic-bezier(0.32, 0.72, 0, 1)",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "0 32px",
+          paddingTop: "calc(env(safe-area-inset-top, 0px) + 88px)",
+          paddingBottom: 32,
+          paddingLeft: 32,
+          paddingRight: 32,
         }}
       >
-        <nav className="flex flex-col gap-8">
+        <nav className="flex flex-col gap-7">
           <Link
             href="/#work"
-            onClick={() => setOpen(false)}
+            onClick={close}
             className="serif"
             style={{
-              fontSize: "clamp(1.75rem, 8vw, 2.5rem)",
+              fontSize: "clamp(1.75rem, 7vw, 2.25rem)",
               color: "var(--foreground)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
@@ -176,10 +242,10 @@ export default function Nav() {
             href={site.author.github}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
+            onClick={close}
             className="serif"
             style={{
-              fontSize: "clamp(1.75rem, 8vw, 2.5rem)",
+              fontSize: "clamp(1.75rem, 7vw, 2.25rem)",
               color: "var(--foreground)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
@@ -191,10 +257,10 @@ export default function Nav() {
             href={site.author.resume}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
+            onClick={close}
             className="serif"
             style={{
-              fontSize: "clamp(1.75rem, 8vw, 2.5rem)",
+              fontSize: "clamp(1.75rem, 7vw, 2.25rem)",
               color: "var(--foreground)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
@@ -204,20 +270,30 @@ export default function Nav() {
           </a>
         </nav>
 
-        <div
+        <div style={{ flex: 1 }} />
+
+        <a
+          href={`mailto:${site.author.email}`}
+          onClick={close}
           className="mono text-[10px] tracking-[0.3em] uppercase"
+          style={{ color: "var(--foreground-dim)" }}
+        >
+          {site.author.email}
+        </a>
+
+        <span
+          aria-hidden
           style={{
             position: "absolute",
-            bottom: 40,
-            left: 32,
-            right: 32,
-            color: "var(--foreground-dim)",
+            bottom: 10,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 36,
+            height: 4,
+            borderRadius: 999,
+            background: "var(--rule)",
           }}
-        >
-          <a href={`mailto:${site.author.email}`} onClick={() => setOpen(false)}>
-            {site.author.email}
-          </a>
-        </div>
+        />
       </div>
     </header>
   );
