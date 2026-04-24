@@ -117,7 +117,7 @@ export default function Home() {
             className="mb-8 flex flex-col gap-3"
           >
             <span className="signal-rule mono text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--foreground-dim)" }}>
-              <span style={{ marginLeft: 52 }}>Toronto · Fintech AM · Solo builder</span>
+              <span style={{ marginLeft: 52 }}>Bridge Four · Est. 2025 · Toronto</span>
             </span>
             <h1
               className="display"

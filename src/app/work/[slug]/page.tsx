@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import Nav from "@/components/Nav";
 import DeviceFrame from "@/components/DeviceFrame";
+import ScoringDemo from "@/components/ScoringDemo";
 import { projects, type Screen } from "@/content/projects";
 
 const fadeUp: Variants = {
@@ -230,6 +231,22 @@ export default function CaseStudy({
           </motion.div>
         </div>
       </section>
+
+      {/* ── 02b · TRY IT (Sygnalist only) ── */}
+      {project.slug === "sygnalist" && (
+        <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <ScoringDemo />
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* ── 03 · BUILD (product) ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>

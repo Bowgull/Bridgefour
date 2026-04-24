@@ -5,10 +5,10 @@
   --background: #0b0a08;
   --background-elev: #121110;
   --foreground: #f2ece0;
-  --foreground-muted: #8a8378;
-  --foreground-dim: #5c574f;
+  --foreground-muted: #9a9287;
+  --foreground-dim: #7a7266;
   --accent: #c9a961;      /* muted gold, shared */
-  --rule: #262320;
+  --rule: #2c2924;
 
   /* Product-specific accents — the two products' real signatures */
   --sygnalist-green: #6AD7A3;   /* radar green from portal_styles.html */
@@ -66,10 +66,9 @@ body::before {
   background:
     radial-gradient(900px 600px at 12% 8%, rgba(106, 215, 163, 0.22), transparent 65%),
     radial-gradient(1000px 700px at 88% 14%, rgba(232, 200, 96, 0.26), transparent 65%),
-    radial-gradient(800px 500px at 50% 100%, rgba(74, 202, 170, 0.16), transparent 70%),
     /* Dot grid — subtle editorial texture across the whole page */
     radial-gradient(rgba(232, 200, 96, 0.045) 1px, transparent 1px);
-  background-size: auto, auto, auto, 32px 32px;
+  background-size: auto, auto, 32px 32px;
 }
 
 /* Film grain — sits above ambient wash, below content. */
@@ -94,16 +93,29 @@ main {
   color: var(--background);
 }
 
-/* Subtle grain overlay. Film feel, not noisy. */
-.grain::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 100;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+/* Grain overlay kept on body::after only. The previous .grain::before
+   duplicated it — removed to cut paint work without a visible change. */
+.grain { /* marker class kept for future use */ }
+
+/* Accessibility focus ring. Visible for keyboard users, invisible for mouse. */
+:focus-visible {
+  outline: 2px solid var(--waymark-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Honor user motion preferences. Kills continuous ambient animations
+   and makes any transitions effectively instant. Framer Motion also
+   respects this automatically. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .serif {
