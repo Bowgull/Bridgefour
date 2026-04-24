@@ -441,7 +441,7 @@ export default function Home() {
       {/* ── EXPERIENCE ── */}
       <section className="px-6 py-24 rule-accent relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative">
-          <SectionHead label="Selected roles" />
+          <SectionHead label="Operating history" />
 
           <ul className="space-y-8">
             {site.experience.map((job, i) => (
