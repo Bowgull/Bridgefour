@@ -16,57 +16,6 @@ const fadeUp: Variants = {
   }),
 };
 
-const SYGNALIST = {
-  accent: "var(--sygnalist-green)",
-  goldish: "var(--sygnalist-gold)",
-};
-const WAYMARK = {
-  accent: "var(--waymark-gold)",
-  goldish: "var(--waymark-teal)",
-};
-
-type Spec = { label: string; value: string };
-
-const sygnalistSpecs: Spec[] = [
-  { label: "Stack", value: "Next.js 16 · Supabase · Vercel" },
-  { label: "AI", value: "Claude · OpenAI" },
-  { label: "Sources", value: "10 feeds + Gmail parser" },
-  { label: "Status", value: "Live · multi-profile" },
-];
-
-const waymarkSpecs: Spec[] = [
-  { label: "Stack", value: "Cloudflare Workers · D1 · Hono · Capacitor iOS" },
-  { label: "AI", value: "Claude Sonnet 4.6 + Haiku" },
-  { label: "Signals", value: "Strava · sleep · soreness · RPE" },
-  { label: "Status", value: "Active build · iOS Live Activity" },
-];
-
-function SpecsGrid({ specs, accent }: { specs: Spec[]; accent: string }) {
-  return (
-    <div className="grid grid-cols-2 gap-4 mt-8 pt-6" style={{ borderTop: "1px solid var(--rule)" }}>
-      {specs.map((s) => (
-        <div key={s.label}>
-          <p className="mono text-[10px] tracking-[0.15em] uppercase mb-1" style={{ color: accent, opacity: 0.75 }}>
-            {s.label}
-          </p>
-          <p style={{ fontSize: "var(--text-small)", color: "var(--foreground-muted)", lineHeight: 1.5 }}>
-            {s.value}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function BuiltWith({ accent, label }: { accent: string; label: string }) {
-  return (
-    <span className="chip mt-6">
-      <span className="chip-dot" style={{ background: accent }} />
-      {label}
-    </span>
-  );
-}
-
 // Section head. Name is the protagonist. No numerals.
 function SectionHead({
   label,
@@ -138,102 +87,21 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-12 mb-20">
-            {/* Sygnalist card — wider for desktop screenshot legibility */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0.1}
-              variants={fadeUp}
-              className="tint-sygnalist p-6 md:p-8 rounded-sm relative overflow-hidden md:col-span-3"
-              style={{ border: "1px solid var(--rule)" }}
-            >
-              <p
-                className="mono text-xs tracking-widest uppercase mb-6"
-                style={{ color: SYGNALIST.accent, opacity: 0.85 }}
-              >
-                {site.heroLeft.label}
-              </p>
-
-              <div className="mb-6">
-                {site.heroLeft.lines.map((line, i) => (
-                  <p
-                    key={i}
-                    className="serif leading-[1.05]"
-                    style={{ fontSize: "var(--text-headline)", color: "var(--foreground)" }}
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
-
-              <div className="mb-6">
-                <Link href="/work/sygnalist" className="block group">
-                  <DeviceFrame
-                    kind="browser"
-                    src="/assets/sygnalist/screens/01.png"
-                    alt="Sygnalist inbox, ranked job radar"
-                    accent={SYGNALIST.accent}
-                    hideChrome
-                  />
-                </Link>
-              </div>
-
-              <p style={{ fontSize: "var(--text-small)", color: "var(--foreground-muted)", maxWidth: "44ch", lineHeight: 1.6 }}>
-                {site.heroLeft.sub}
-              </p>
-
-              <SpecsGrid specs={sygnalistSpecs} accent={SYGNALIST.accent} />
-              <BuiltWith accent={SYGNALIST.accent} label="Built with Cursor + Claude" />
-            </motion.div>
-
-            {/* Waymark card */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0.25}
-              variants={fadeUp}
-              className="tint-waymark p-6 md:p-8 rounded-sm relative overflow-hidden md:col-span-2"
-              style={{ border: "1px solid var(--rule)" }}
-            >
-              <p
-                className="mono text-xs tracking-widest uppercase mb-6"
-                style={{ color: WAYMARK.accent, opacity: 0.85 }}
-              >
-                {site.heroRight.label}
-              </p>
-
-              <div className="mb-6">
-                {site.heroRight.lines.map((line, i) => (
-                  <p
-                    key={i}
-                    className="serif leading-[1.05]"
-                    style={{ fontSize: "var(--text-headline)", color: "var(--foreground)" }}
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
-
-              <div className="mb-6 flex justify-center">
-                <Link href="/work/waymark" className="block group" style={{ maxWidth: 260, width: "100%" }}>
-                  <DeviceFrame
-                    kind="phone"
-                    src="/assets/waymark/screens/01.png"
-                    alt="Waymark today, morning report"
-                    accent={WAYMARK.accent}
-                  />
-                </Link>
-              </div>
-
-              <p style={{ fontSize: "var(--text-small)", color: "var(--foreground-muted)", maxWidth: "44ch", lineHeight: 1.6 }}>
-                {site.heroRight.sub}
-              </p>
-
-              <SpecsGrid specs={waymarkSpecs} accent={WAYMARK.accent} />
-              <BuiltWith accent={WAYMARK.accent} label="Built with Claude" />
-            </motion.div>
-          </div>
+          <motion.p
+            className="serif mb-20"
+            style={{
+              fontSize: "clamp(1.5rem, 2.6vw, 2rem)",
+              lineHeight: 1.3,
+              letterSpacing: "-0.015em",
+              color: "var(--foreground)",
+              maxWidth: "42ch",
+            }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          >
+            {site.thesis}
+          </motion.p>
 
           <motion.div
             initial="hidden"
@@ -244,32 +112,9 @@ export default function Home() {
           >
             <div style={{ height: 1, width: 40, background: "var(--foreground-dim)" }} />
             <p className="mono text-xs tracking-widest uppercase" style={{ color: "var(--foreground-dim)" }}>
-              Two voices. One builder.
+              A personal lab, currently housing two products.
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      {/* ── THESIS ── */}
-      <section className="px-6 py-24 rule-accent scanline wash-thesis relative overflow-hidden">
-        <div className="max-w-6xl mx-auto relative">
-          <SectionHead label="Thesis" />
-          <motion.p
-            className="serif"
-            style={{
-              fontSize: "clamp(1.5rem, 2.6vw, 2rem)",
-              lineHeight: 1.3,
-              letterSpacing: "-0.015em",
-              color: "var(--foreground)",
-              maxWidth: "42ch",
-            }}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {site.thesis}
-          </motion.p>
         </div>
       </section>
 
@@ -281,7 +126,7 @@ export default function Home() {
             className="serif mb-14"
             style={{ fontSize: "var(--text-title)", color: "var(--foreground-muted)", maxWidth: "46ch", lineHeight: 1.4 }}
           >
-            Two products. Shipped solo. Real stacks, real users.
+            Two products, both built solo, both running in production.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
@@ -325,10 +170,11 @@ export default function Home() {
                         </p>
                       </div>
                       <span
-                        className="mono text-xs shrink-0 group-hover:translate-x-1 transition-transform duration-200"
-                        style={{ color: accent, marginTop: "4px" }}
+                        className="mono text-[10px] tracking-[0.22em] uppercase shrink-0 flex items-center gap-2 group-hover:translate-x-1 transition-transform duration-200"
+                        style={{ color: accent, marginTop: "6px" }}
                       >
-                        →
+                        Case study
+                        <span aria-hidden>→</span>
                       </span>
                     </div>
                   </Link>
@@ -347,7 +193,7 @@ export default function Home() {
             className="serif mb-16"
             style={{ fontSize: "var(--text-title)", color: "var(--foreground-muted)", maxWidth: "52ch", lineHeight: 1.4 }}
           >
-            Three real stories. The problem I watched. The move I made. The stack I used.
+            Three cases from the last couple of years. Each one covers what I saw, how I read it, and what I built in response.
           </p>
 
           <div className="space-y-20">
@@ -500,7 +346,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            Let&apos;s talk.
+            Reach out.
           </motion.p>
 
           <div className="flex flex-wrap gap-6 items-center">
@@ -549,7 +395,7 @@ export default function Home() {
             {site.domain}
           </p>
           <p className="mono text-xs" style={{ color: "var(--foreground-dim)" }}>
-            Still building.
+            More in the pipeline.
           </p>
         </div>
       </footer>

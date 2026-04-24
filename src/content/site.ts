@@ -1,11 +1,11 @@
 export const site = {
   name: "Bridge Four",
   domain: "bridgefour.co",
-  tagline: "Still at the desk job. Still building the thing.",
+  tagline: "A personal lab for AI-native software.",
   positioning:
-    "Fintech AM · Ships AI-native tools · Open to Solutions Engineer, Forward Deployed, Technical AM, AI Implementation",
+    "Fintech AM · Builds AI-native tools",
   thesis:
-    "Two AI products. One helps other people find work. One rewrites my training week when the body says otherwise. Both solo, both shipping, both from the desk job.",
+    "Two AI products, built solo. One helps other people find work. The other rewrites my training week when the body says otherwise. Both live, both still evolving.",
   author: {
     name: "Josh Bocas",
     handle: "Bowgull",

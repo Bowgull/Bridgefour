@@ -206,7 +206,7 @@ export default function CaseStudy({
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <BeatHead process="Signal · the problem" title={project.problem.headline} accent={accent} />
+            <BeatHead process="Problem" title={project.problem.headline} accent={accent} />
             <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "72ch" }}>
               {project.problem.body}
             </p>
@@ -223,7 +223,7 @@ export default function CaseStudy({
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <BeatHead process="Read · the approach" title={project.approach.headline} accent={accent} />
+            <BeatHead process="Approach" title={project.approach.headline} accent={accent} />
             <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75, maxWidth: "72ch" }}>
               {project.approach.body}
             </p>
@@ -234,7 +234,7 @@ export default function CaseStudy({
       {/* ── 03 · BUILD (product) ── */}
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto">
-          <BeatHead process="Build · the product" title={project.product.headline} accent={accent} />
+          <BeatHead process="Product" title={project.product.headline} accent={accent} />
 
           {/* Featured screens, interleaved at full width (browser) or larger (phone) */}
           {isPhone ? (
@@ -268,10 +268,17 @@ export default function CaseStudy({
             <div className="mt-12 pt-10" style={{ borderTop: "1px solid var(--rule)" }}>
               <button
                 onClick={() => setShowMore((v) => !v)}
-                className="mono text-xs tracking-[0.2em] uppercase link-understated"
-                style={{ color: "var(--foreground-muted)" }}
+                className="mono text-xs tracking-[0.2em] uppercase px-4 py-2.5 border inline-flex items-center gap-2 transition-colors duration-200"
+                style={{ color: "var(--foreground)", borderColor: "var(--rule)" }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLElement).style.borderColor = accent)
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLElement).style.borderColor = "var(--rule)")
+                }
               >
-                {showMore ? "Hide" : "Show"} {restScreens.length} more surface{restScreens.length === 1 ? "" : "s"} ↓
+                {showMore ? "Hide" : "Show"} {restScreens.length} more surface{restScreens.length === 1 ? "" : "s"}
+                <span aria-hidden>{showMore ? "↑" : "↓"}</span>
               </button>
 
               {showMore && (
@@ -320,7 +327,7 @@ export default function CaseStudy({
       <section className="px-6 py-20" style={{ borderBottom: "1px solid var(--rule)" }}>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16">
           <div>
-            <BeatHead process="Tools · what I used" title={project.tools.headline} accent={accent} />
+            <BeatHead process="Stack" title={project.tools.headline} accent={accent} />
             <p style={{ fontSize: "var(--text-body)", color: "var(--foreground-muted)", lineHeight: 1.75 }}>
               {project.tools.body}
             </p>
@@ -343,7 +350,7 @@ export default function CaseStudy({
       {/* ── 05 · PROOF ── */}
       <section className="px-6 py-20">
         <div className="max-w-6xl mx-auto">
-          <BeatHead process="Proof · what it shows" title={project.proof.headline} accent={accent} />
+          <BeatHead process="Outcome" title={project.proof.headline} accent={accent} />
 
           {project.proof.stat && (
             <div className="mb-12">
