@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
+import { track } from "@vercel/analytics";
 import Nav from "@/components/Nav";
 import DeviceFrame from "@/components/DeviceFrame";
 import { ExternalMark } from "@/components/icons";
@@ -362,6 +363,7 @@ export default function Home() {
               href={site.author.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("linkedin_click")}
               className="mono text-sm link-understated"
               style={{ color: "var(--foreground-muted)" }}
             >

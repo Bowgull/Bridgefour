@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Fraunces, Cinzel } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -63,7 +64,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${cinzel.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col grain">{children}</body>
+      <body className="min-h-full flex flex-col grain">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
