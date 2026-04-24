@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Fraunces, Cinzel } from "next/font/google";
 import "./globals.css";
 
@@ -28,6 +28,12 @@ export const metadata: Metadata = {
   title: "Bridge Four. Josh Bocas.",
   description:
     "Two AI products. One for the job I have. One for the life I want. Built by one person.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

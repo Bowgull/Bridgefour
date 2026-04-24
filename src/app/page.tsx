@@ -66,7 +66,7 @@ export default function Home() {
             className="mb-8 flex flex-col gap-3"
           >
             <span className="signal-rule mono text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--foreground-dim)" }}>
-              <span style={{ marginLeft: 52 }}>Toronto · Fintech AM · Solo builder</span>
+              <span className="md:ml-[52px]">Toronto · Fintech AM · Solo builder</span>
             </span>
             <h1
               className="display"
@@ -145,8 +145,10 @@ export default function Home() {
                 >
                   <Link href={`/work/${project.slug}`} className="group block">
                     <div
-                      className={`${tintClass} w-full mb-5 rounded-sm flex items-center justify-center`}
-                      style={{ border: "1px solid var(--rule)", padding: isPhone ? "32px" : "24px", minHeight: isPhone ? 460 : undefined }}
+                      className={`${tintClass} w-full mb-5 rounded-sm flex items-center justify-center ${
+                        isPhone ? "p-5 sm:p-6 md:p-8 min-h-[380px] sm:min-h-[420px] md:min-h-[460px]" : "p-4 sm:p-5 md:p-6"
+                      }`}
+                      style={{ border: "1px solid var(--rule)" }}
                     >
                       <DeviceFrame
                         kind={isPhone ? "phone" : "browser"}
