@@ -220,6 +220,16 @@ main {
   text-decoration-color: var(--accent);
 }
 
+/* External mark — top-right corner bracket. Matches .bracket motif. */
+.ext-mark {
+  transition: color 220ms ease, transform 220ms ease;
+}
+a:hover .ext-mark,
+a:focus-visible .ext-mark {
+  color: var(--accent);
+  transform: translate(1px, -1px);
+}
+
 /* Product chips — small inline badges for "built with claude" etc. */
 .chip {
   display: inline-flex;

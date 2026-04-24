@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
+import { ExternalMark } from "@/components/icons";
 
 const DISMISS_THRESHOLD_PX = 80;
 
@@ -100,7 +101,7 @@ export default function Nav() {
             ((e.currentTarget as HTMLElement).style.borderColor = "var(--rule)")
           }
         >
-          Resume ↗
+          Resume<ExternalMark />
         </a>
       </nav>
 
@@ -251,7 +252,7 @@ export default function Nav() {
               lineHeight: 1.1,
             }}
           >
-            GitHub ↗
+            GitHub<ExternalMark />
           </Link>
           <a
             href={site.author.resume}
@@ -266,7 +267,7 @@ export default function Nav() {
               lineHeight: 1.1,
             }}
           >
-            Resume ↗
+            Resume<ExternalMark />
           </a>
         </nav>
 

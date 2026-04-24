@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import Nav from "@/components/Nav";
 import DeviceFrame from "@/components/DeviceFrame";
+import { ExternalMark } from "@/components/icons";
 import { site } from "@/content/site";
 import { projects } from "@/content/projects";
 
@@ -103,18 +104,16 @@ export default function Home() {
             {site.thesis}
           </motion.p>
 
-          <motion.div
+          <motion.p
             initial="hidden"
             animate="visible"
             custom={0.45}
             variants={fadeUp}
-            className="flex items-center gap-4"
+            className="mono text-xs tracking-widest uppercase"
+            style={{ color: "var(--foreground-dim)" }}
           >
-            <div style={{ height: 1, width: 40, background: "var(--foreground-dim)" }} />
-            <p className="mono text-xs tracking-widest uppercase" style={{ color: "var(--foreground-dim)" }}>
-              A personal lab, currently housing two products.
-            </p>
-          </motion.div>
+            A personal lab, currently housing two products.
+          </motion.p>
         </div>
       </section>
 
@@ -366,7 +365,7 @@ export default function Home() {
               className="mono text-sm link-understated"
               style={{ color: "var(--foreground-muted)" }}
             >
-              LinkedIn ↗
+              LinkedIn<ExternalMark />
             </a>
             <a
               href={site.author.github}
@@ -375,7 +374,7 @@ export default function Home() {
               className="mono text-sm link-understated"
               style={{ color: "var(--foreground-muted)" }}
             >
-              GitHub ↗
+              GitHub<ExternalMark />
             </a>
             <a
               href={site.author.resume}
@@ -384,7 +383,7 @@ export default function Home() {
               className="mono text-sm link-understated"
               style={{ color: "var(--foreground-muted)" }}
             >
-              Resume ↗
+              Resume<ExternalMark />
             </a>
           </div>
         </div>
