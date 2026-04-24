@@ -143,7 +143,11 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
                   className={isPhone ? "md:col-span-2" : "md:col-span-3"}
                 >
-                  <Link href={`/work/${project.slug}`} className="group block">
+                  <Link
+                    href={`/work/${project.slug}`}
+                    onClick={() => track("case_study_click", { project: project.slug })}
+                    className="group block"
+                  >
                     <div
                       className={`${tintClass} w-full mb-5 rounded-sm flex items-center justify-center ${
                         isPhone ? "p-5 sm:p-6 md:p-8 min-h-[380px] sm:min-h-[420px] md:min-h-[460px]" : "p-4 sm:p-5 md:p-6"
@@ -373,6 +377,7 @@ export default function Home() {
               href={site.author.github}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("github_click")}
               className="mono text-sm link-understated"
               style={{ color: "var(--foreground-muted)" }}
             >
@@ -382,6 +387,7 @@ export default function Home() {
               href={site.author.resume}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("resume_click")}
               className="mono text-sm link-understated"
               style={{ color: "var(--foreground-muted)" }}
             >

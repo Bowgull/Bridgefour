@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import { site } from "@/content/site";
 import { ExternalMark } from "@/components/icons";
 
@@ -79,6 +80,7 @@ export default function Nav() {
           href={site.author.github}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track("github_click", { location: "nav" })}
           className="mono text-xs tracking-widest uppercase link-understated"
           style={{ color: "var(--foreground-muted)" }}
         >
@@ -88,6 +90,7 @@ export default function Nav() {
           href={site.author.resume}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track("resume_click", { location: "nav" })}
           className="mono text-xs tracking-widest uppercase px-3 py-1.5 border"
           style={{
             color: "var(--foreground)",
@@ -243,7 +246,10 @@ export default function Nav() {
             href={site.author.github}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={close}
+            onClick={() => {
+              track("github_click", { location: "mobile_nav" });
+              close();
+            }}
             className="serif"
             style={{
               fontSize: "clamp(1.75rem, 7vw, 2.25rem)",
@@ -258,7 +264,10 @@ export default function Nav() {
             href={site.author.resume}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={close}
+            onClick={() => {
+              track("resume_click", { location: "mobile_nav" });
+              close();
+            }}
             className="serif"
             style={{
               fontSize: "clamp(1.75rem, 7vw, 2.25rem)",
