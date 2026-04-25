@@ -10,7 +10,7 @@ const BG = "#0b0a08";
 const FG = "#f2ece0";
 const FG_MUTED = "#8a8378";
 const FG_DIM = "#5c574f";
-const GOLD = "#E8C860";
+const GOLD = "#CC5500";
 const GREEN = "#6AD7A3";
 
 export default async function Image() {

@@ -61,8 +61,8 @@ export default function Nav() {
           aria-hidden
           style={{
             width: 7, height: 7, borderRadius: 999,
-            background: "var(--waymark-gold)",
-            boxShadow: "0 0 10px var(--waymark-gold)",
+            background: "var(--brand)",
+            boxShadow: "0 0 10px var(--brand)",
           }}
         />
         Bridge Four
@@ -74,7 +74,7 @@ export default function Nav() {
           className="mono text-xs tracking-widest uppercase link-understated"
           style={{ color: "var(--foreground-muted)" }}
         >
-          Shipped
+          Live products
         </Link>
         <Link
           href={site.author.github}
@@ -240,7 +240,7 @@ export default function Nav() {
               lineHeight: 1.1,
             }}
           >
-            Shipped
+            Live products
           </Link>
           <Link
             href={site.author.github}

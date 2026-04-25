@@ -45,7 +45,7 @@ function SectionHead({
           flex: 1,
           height: 1,
           background: `linear-gradient(90deg, ${
-            accent === "green" ? "var(--sygnalist-green)" : "var(--waymark-gold)"
+            accent === "green" ? "var(--sygnalist-green)" : "var(--brand)"
           }55, transparent)`,
         }}
       />
@@ -79,7 +79,7 @@ export default function Home() {
                 lineHeight: 1,
               }}
             >
-              Josh <span style={{ color: "var(--waymark-gold)" }}>Bocas</span>
+              Josh <span style={{ color: "var(--brand)" }}>Bocas</span>
             </h1>
             <p
               className="mono text-xs tracking-[0.18em] uppercase"
@@ -121,7 +121,7 @@ export default function Home() {
       {/* ── PROJECTS ── */}
       <section id="work" className="px-6 py-24 rule-accent wash-work relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative">
-          <SectionHead label="Shipped" accent="green" />
+          <SectionHead label="Live products" accent="green" />
           <p
             className="serif mb-14"
             style={{ fontSize: "var(--text-title)", color: "var(--foreground-muted)", maxWidth: "46ch", lineHeight: 1.4 }}
