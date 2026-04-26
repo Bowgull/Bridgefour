@@ -93,40 +93,70 @@ export default function DemoModal({ open, onClose, url, kind, title, accent, ste
 
             {steps && steps.length > 0 && (
               <div
-                className="self-stretch flex items-start gap-3 px-1 py-3 rounded-sm"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--rule)" }}
+                className="self-stretch flex items-start gap-4 px-4 py-4 rounded-sm"
+                style={{
+                  background: `linear-gradient(180deg, ${accent}12, rgba(255,255,255,0.04))`,
+                  border: `1px solid ${accent}55`,
+                  boxShadow: `0 0 0 1px ${accent}22, 0 8px 24px -12px ${accent}55`,
+                }}
               >
                 <button
                   onClick={() => setStep((s) => Math.max(0, s - 1))}
-                  className="mono text-[11px] pt-0.5 shrink-0 transition-opacity duration-150"
-                  style={{ color: accent, opacity: step === 0 ? 0.25 : 1 }}
+                  className="mono text-[22px] shrink-0 transition-all duration-150 flex items-center justify-center rounded-sm"
+                  style={{
+                    color: accent,
+                    opacity: step === 0 ? 0.25 : 1,
+                    width: 44,
+                    height: 44,
+                    background: step === 0 ? "transparent" : `${accent}14`,
+                    border: `1px solid ${step === 0 ? "transparent" : `${accent}66`}`,
+                    cursor: step === 0 ? "not-allowed" : "pointer",
+                  }}
                   disabled={step === 0}
                   aria-label="Previous step"
+                  onMouseEnter={(e) => { if (step !== 0) (e.currentTarget as HTMLElement).style.background = `${accent}2a`; }}
+                  onMouseLeave={(e) => { if (step !== 0) (e.currentTarget as HTMLElement).style.background = `${accent}14`; }}
                 >
                   ←
                 </button>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="mono text-[10px] tracking-[0.2em] uppercase" style={{ color: accent }}>
-                      {step + 1} / {steps.length}
+                  <div className="flex items-center gap-3 mb-3 flex-wrap">
+                    <span
+                      className="mono text-[14px] tracking-[0.22em] uppercase font-semibold px-2.5 py-1 rounded-sm"
+                      style={{ color: accent, background: `${accent}1a`, border: `1px solid ${accent}55` }}
+                    >
+                      Step {step + 1} / {steps.length}
                     </span>
-                    <span className="mono text-[10px] tracking-[0.15em] uppercase" style={{ color: "var(--foreground-dim)" }}>
+                    <span
+                      className="mono text-[16px] tracking-[0.1em] uppercase font-semibold"
+                      style={{ color: "var(--foreground)" }}
+                    >
                       {steps[step].title}
                     </span>
                   </div>
                   <p
                     className="serif"
-                    style={{ fontSize: 13, color: "var(--foreground-muted)", lineHeight: 1.6, margin: 0 }}
+                    style={{ fontSize: 19, color: "var(--foreground)", lineHeight: 1.55, margin: 0 }}
                   >
                     {steps[step].body}
                   </p>
                 </div>
                 <button
                   onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
-                  className="mono text-[11px] pt-0.5 shrink-0 transition-opacity duration-150"
-                  style={{ color: accent, opacity: step === steps.length - 1 ? 0.25 : 1 }}
+                  className="mono text-[22px] shrink-0 transition-all duration-150 flex items-center justify-center rounded-sm"
+                  style={{
+                    color: accent,
+                    opacity: step === steps.length - 1 ? 0.25 : 1,
+                    width: 44,
+                    height: 44,
+                    background: step === steps.length - 1 ? "transparent" : `${accent}14`,
+                    border: `1px solid ${step === steps.length - 1 ? "transparent" : `${accent}66`}`,
+                    cursor: step === steps.length - 1 ? "not-allowed" : "pointer",
+                  }}
                   disabled={step === steps.length - 1}
                   aria-label="Next step"
+                  onMouseEnter={(e) => { if (step !== steps.length - 1) (e.currentTarget as HTMLElement).style.background = `${accent}2a`; }}
+                  onMouseLeave={(e) => { if (step !== steps.length - 1) (e.currentTarget as HTMLElement).style.background = `${accent}14`; }}
                 >
                   →
                 </button>

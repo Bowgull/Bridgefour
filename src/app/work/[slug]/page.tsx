@@ -11,8 +11,8 @@ import DemoModal from "@/components/DemoModal";
 import { projects, type Screen } from "@/content/projects";
 
 const DEMO_URLS: Record<string, string | undefined> = {
-  waymark: process.env.NEXT_PUBLIC_WAYMARK_DEMO_URL,
-  sygnalist: process.env.NEXT_PUBLIC_SYGNALIST_DEMO_URL,
+  waymark: "/_demo/waymark",
+  sygnalist: "/_demo/sygnalist",
 };
 
 const fadeUp: Variants = {
