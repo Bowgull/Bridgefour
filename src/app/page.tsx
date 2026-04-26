@@ -150,16 +150,17 @@ export default function Home() {
                   >
                     <div
                       className={`${tintClass} w-full mb-5 rounded-sm flex items-center justify-center ${
-                        isPhone ? "p-5 sm:p-6 md:p-8 min-h-[380px] sm:min-h-[420px] md:min-h-[460px]" : "p-4 sm:p-5 md:p-6"
+                        isPhone ? "p-5 sm:p-6 md:p-8" : "p-4 sm:p-5 md:p-6"
                       }`}
                       style={{ border: "1px solid var(--rule)" }}
                     >
                       <DeviceFrame
                         kind={isPhone ? "phone" : "browser"}
-                        src={isPhone ? "/assets/waymark/screens/01.png" : "/assets/sygnalist/screens/01.png"}
+                        src={isPhone ? "/assets/waymark/screens/home.png" : "/assets/sygnalist/screens/01.png"}
                         alt={`${project.title} product screen`}
                         accent={accent}
                         hideChrome={!isPhone}
+                        aspectRatio={isPhone ? "1560 / 2080" : undefined}
                       />
                     </div>
 
@@ -176,8 +177,8 @@ export default function Home() {
                         </p>
                       </div>
                       <span
-                        className="mono text-[10px] tracking-[0.22em] uppercase shrink-0 flex items-center gap-2 group-hover:translate-x-1 transition-transform duration-200"
-                        style={{ color: accent, marginTop: "6px" }}
+                        className="mono text-xs tracking-[0.18em] uppercase shrink-0 flex items-center gap-2 group-hover:translate-x-1 transition-transform duration-200 px-3 py-1.5 border"
+                        style={{ color: accent, borderColor: `${accent}66`, marginTop: "4px" }}
                       >
                         Case study
                         <span aria-hidden>→</span>
