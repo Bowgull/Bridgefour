@@ -4,9 +4,16 @@ import { notFound } from "next/navigation";
 import { use, useState } from "react";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
+import { track } from "@vercel/analytics";
 import Nav from "@/components/Nav";
 import DeviceFrame from "@/components/DeviceFrame";
+import DemoModal from "@/components/DemoModal";
 import { projects, type Screen } from "@/content/projects";
+
+const DEMO_URLS: Record<string, string | undefined> = {
+  waymark: process.env.NEXT_PUBLIC_WAYMARK_DEMO_URL,
+  sygnalist: process.env.NEXT_PUBLIC_SYGNALIST_DEMO_URL,
+};
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -125,6 +132,9 @@ export default function CaseStudy({
   const featuredScreens = project.product.screens.filter((s) => s.featured);
   const restScreens = project.product.screens.filter((s) => !s.featured);
   const [showMore, setShowMore] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
+  const demoUrl = DEMO_URLS[project.slug] ?? null;
+  const accentSolid = isPhone ? "#E8C860" : "#6AD7A3";
 
   return (
     <main>
@@ -169,6 +179,21 @@ export default function CaseStudy({
             >
               {project.tagline}
             </p>
+
+            <button
+              onClick={() => {
+                track("demo_open", { project: project.slug });
+                setDemoOpen(true);
+              }}
+              className="mono text-xs tracking-[0.22em] uppercase mt-8 inline-flex items-center gap-3 px-4 py-2.5 border transition-colors duration-200"
+              style={{ color: "var(--foreground)", borderColor: accentSolid, background: "transparent" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = `${accentSolid}11`)}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
+            >
+              <span aria-hidden style={{ width: 7, height: 7, borderRadius: 999, background: accentSolid, boxShadow: `0 0 8px ${accentSolid}99` }} />
+              {demoUrl ? "Try the demo" : "Demo coming soon"}
+              <span aria-hidden>→</span>
+            </button>
           </motion.div>
 
           <motion.div
@@ -401,6 +426,15 @@ export default function CaseStudy({
           ))}
         </div>
       </section>
+
+      <DemoModal
+        open={demoOpen}
+        onClose={() => setDemoOpen(false)}
+        url={demoUrl}
+        kind={isPhone ? "phone" : "browser"}
+        title={project.title}
+        accent={accentSolid}
+      />
     </main>
   );
 }

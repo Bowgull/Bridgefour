@@ -160,7 +160,7 @@ export default function Home() {
                         alt={`${project.title} product screen`}
                         accent={accent}
                         hideChrome={!isPhone}
-                        aspectRatio={isPhone ? "1560 / 2080" : undefined}
+                        aspectRatio={isPhone ? "367 / 813" : undefined}
                       />
                     </div>
 
