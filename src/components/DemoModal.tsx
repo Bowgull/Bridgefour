@@ -85,13 +85,6 @@ export default function DemoModal({ open, onClose, url, kind, title, accent }: P
             </div>
 
             {kind === "phone" ? <PhoneFrame url={url} accent={accent} title={title} /> : <BrowserFrame url={url} accent={accent} title={title} />}
-
-            <p
-              className="mono text-[10px] tracking-[0.2em] uppercase max-w-[60ch] text-center"
-              style={{ color: "var(--foreground-dim)" }}
-            >
-              Read-only sandbox · seeded data · no live API calls
-            </p>
           </motion.div>
         </motion.div>
       )}

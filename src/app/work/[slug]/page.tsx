@@ -183,7 +183,12 @@ export default function CaseStudy({
             <button
               onClick={() => {
                 track("demo_open", { project: project.slug });
-                setDemoOpen(true);
+                const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+                if (isMobile && demoUrl) {
+                  window.open(demoUrl, "_blank", "noopener");
+                } else {
+                  setDemoOpen(true);
+                }
               }}
               className="mono text-xs tracking-[0.22em] uppercase mt-8 inline-flex items-center gap-3 px-4 py-2.5 border transition-colors duration-200"
               style={{ color: "var(--foreground)", borderColor: accentSolid, background: "transparent" }}
