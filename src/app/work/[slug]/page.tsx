@@ -11,8 +11,8 @@ import DemoModal from "@/components/DemoModal";
 import { projects, type Screen } from "@/content/projects";
 
 const DEMO_URLS: Record<string, string | undefined> = {
-  waymark: "/_demo/waymark",
-  sygnalist: "/_demo/sygnalist",
+  waymark: "https://waymark-demo.vercel.app/",
+  sygnalist: "https://sygnalist-demo.vercel.app/login",
 };
 
 const fadeUp: Variants = {
