@@ -439,6 +439,7 @@ export default function CaseStudy({
         kind={isPhone ? "phone" : "browser"}
         title={project.title}
         accent={accentSolid}
+        steps={project.demoSteps}
       />
     </main>
   );

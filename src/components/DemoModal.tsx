@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { DemoStep } from "@/content/projects";
 
 type Props = {
   open: boolean;
@@ -10,10 +11,16 @@ type Props = {
   kind: "phone" | "browser";
   title: string;
   accent: string;
+  steps?: DemoStep[];
 };
 
-export default function DemoModal({ open, onClose, url, kind, title, accent }: Props) {
+export default function DemoModal({ open, onClose, url, kind, title, accent, steps }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (open) setStep(0);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -83,6 +90,48 @@ export default function DemoModal({ open, onClose, url, kind, title, accent }: P
                 Close · Esc
               </button>
             </div>
+
+            {steps && steps.length > 0 && (
+              <div
+                className="self-stretch flex items-start gap-3 px-1 py-3 rounded-sm"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--rule)" }}
+              >
+                <button
+                  onClick={() => setStep((s) => Math.max(0, s - 1))}
+                  className="mono text-[11px] pt-0.5 shrink-0 transition-opacity duration-150"
+                  style={{ color: accent, opacity: step === 0 ? 0.25 : 1 }}
+                  disabled={step === 0}
+                  aria-label="Previous step"
+                >
+                  ←
+                </button>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="mono text-[10px] tracking-[0.2em] uppercase" style={{ color: accent }}>
+                      {step + 1} / {steps.length}
+                    </span>
+                    <span className="mono text-[10px] tracking-[0.15em] uppercase" style={{ color: "var(--foreground-dim)" }}>
+                      {steps[step].title}
+                    </span>
+                  </div>
+                  <p
+                    className="serif"
+                    style={{ fontSize: 13, color: "var(--foreground-muted)", lineHeight: 1.6, margin: 0 }}
+                  >
+                    {steps[step].body}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
+                  className="mono text-[11px] pt-0.5 shrink-0 transition-opacity duration-150"
+                  style={{ color: accent, opacity: step === steps.length - 1 ? 0.25 : 1 }}
+                  disabled={step === steps.length - 1}
+                  aria-label="Next step"
+                >
+                  →
+                </button>
+              </div>
+            )}
 
             {kind === "phone" ? <PhoneFrame url={url} accent={accent} title={title} /> : <BrowserFrame url={url} accent={accent} title={title} />}
           </motion.div>
