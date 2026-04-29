@@ -4,6 +4,11 @@ export type Screen = {
   featured?: boolean;
 };
 
+export type DemoStep = {
+  title: string;
+  body: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -36,6 +41,7 @@ export type Project = {
     stat?: string;
     statLabel?: string;
   };
+  demoSteps?: DemoStep[];
 };
 
 export const projects: Project[] = [
@@ -105,6 +111,16 @@ export const projects: Project[] = [
       stat: "2 rebuilds",
       statLabel: "Apps Script v1 to Next.js + Supabase on Vercel. Multi-profile. Zero autonomous actions.",
     },
+    demoSteps: [
+      { title: "Sign in", body: "Credentials are pre-filled. Hit sign in to enter the Engine Room as admin." },
+      { title: "Inbox", body: "Live signals from 10 sources, ranked A to C by fit score against the active client's profile. Each job shows the reasoning inline." },
+      { title: "GoodFit score", body: "The badge on each job is AI-derived: role alignment, seniority, location, hard disqualifiers. The score is additive across weighted lanes — not a black box." },
+      { title: "Source badges", body: "Each job shows which feed it came from: Remotive, Adzuna, Jooble, LinkedIn digest, Gmail parse, or ATS. Ten sources behind one ranked inbox." },
+      { title: "Promote to tracker", body: "Hit Add to Tracker on any job to move it into the pipeline. Stage auto-sets to Prospect. One click." },
+      { title: "Tracker", body: "Pipeline by stage: Prospect, Applied, Interview, Final, Offer. Stage-colored with day-count chips and pending GoodFit checks per card." },
+      { title: "Client view", body: "Hit the eye icon next to a client name to switch into their portal. Exactly what they see — no admin chrome, no extra columns." },
+      { title: "Role lanes", body: "Lanes define what a Tier A job looks like for each client. Each lane carries a weight. Add a lane and every existing score recalculates." },
+    ],
   },
   {
     slug: "waymark",
@@ -174,5 +190,16 @@ export const projects: Project[] = [
       stat: "29.5K LOC",
       statLabel: "53 screens. 8 AI systems. Strava live. Bidirectional Live Activity. Prompt caching and interleaved thinking.",
     },
+    demoSteps: [
+      { title: "Morning report", body: "Tap LOG to check in. Sleep, soreness, RPE, herb, alcohol, notes. The coaching layer reads this before deciding whether to move anything." },
+      { title: "Today timeline", body: "Sessions for the day in AM and PM swim lanes. Tap any row to expand it and see the full session detail." },
+      { title: "Session actions", body: "Mark Completed when done. Replace swaps the session with an equivalent from the library. Skip logs the miss and flags it for the coach." },
+      { title: "Program view", body: "Your full training block as a week grid. Foundation phase, corrective work, light loading. Tap any day to drill into its sessions." },
+      { title: "Library", body: "85+ techniques across Strength, Core, Mobility, Bagwork, and Foundation. Tap any technique to see sets, reps, and coaching cues." },
+      { title: "Waybook", body: "Personal health journal anchored to the Library tab. Locked behind a second auth. The coach reads it. Nobody else does." },
+      { title: "Settings", body: "Morning alarm, Muay Thai class days, bag work category chips. The redeploy counter shows days until the next training block." },
+      { title: "Ledger", body: "Weekly summary: sessions complete vs planned, new PRs, volume delta vs last week. The chart telling the truth, not the plan." },
+      { title: "Strava bridge", body: "Every run routes into the coaching layer automatically via webhook. HR zones pulled per split. Pace drift against targets. Type divergence flagged when you did Muay Thai instead of strength." },
+    ],
   },
 ];

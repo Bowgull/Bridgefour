@@ -7,7 +7,8 @@
   --foreground: #f2ece0;
   --foreground-muted: #8a8378;
   --foreground-dim: #5c574f;
-  --accent: #c9a961;      /* muted gold, shared */
+  --brand: #CC5500;       /* bridgefour burnt orange — portfolio chrome */
+  --accent: var(--brand); /* shared site accent */
   --rule: #262320;
 
   /* Product-specific accents — the two products' real signatures */
@@ -65,10 +66,10 @@ body::before {
   z-index: 0;
   background:
     radial-gradient(900px 600px at 12% 8%, rgba(106, 215, 163, 0.22), transparent 65%),
-    radial-gradient(1000px 700px at 88% 14%, rgba(232, 200, 96, 0.26), transparent 65%),
+    radial-gradient(1000px 700px at 88% 14%, rgba(204, 85, 0, 0.26), transparent 65%),
     radial-gradient(800px 500px at 50% 100%, rgba(74, 202, 170, 0.16), transparent 70%),
     /* Dot grid — subtle editorial texture across the whole page */
-    radial-gradient(rgba(232, 200, 96, 0.045) 1px, transparent 1px);
+    radial-gradient(rgba(204, 85, 0, 0.045) 1px, transparent 1px);
   background-size: auto, auto, auto, 32px 32px;
 }
 
@@ -132,7 +133,7 @@ main {
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: 0.02em;
-  background: linear-gradient(180deg, var(--waymark-gold) 0%, rgba(232, 200, 96, 0.25) 100%);
+  background: linear-gradient(180deg, var(--brand) 0%, rgba(204, 85, 0, 0.25) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -148,7 +149,7 @@ main {
   content: "";
   width: 36px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--waymark-gold));
+  background: linear-gradient(90deg, transparent, var(--brand));
   display: inline-block;
 }
 .signal-rule::after {
@@ -156,8 +157,8 @@ main {
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: var(--waymark-gold);
-  box-shadow: 0 0 12px var(--waymark-gold);
+  background: var(--brand);
+  box-shadow: 0 0 12px var(--brand);
   animation: pulse 2.4s ease-in-out infinite;
 }
 @keyframes pulse {
@@ -175,7 +176,7 @@ main {
   inset: -120px -80px;
   background:
     radial-gradient(600px 300px at 20% 30%, rgba(106, 215, 163, 0.08), transparent 70%),
-    radial-gradient(700px 320px at 80% 60%, rgba(232, 200, 96, 0.1), transparent 70%);
+    radial-gradient(700px 320px at 80% 60%, rgba(204, 85, 0, 0.1), transparent 70%);
   pointer-events: none;
   z-index: -1;
 }
@@ -200,8 +201,8 @@ main {
   width: 5px;
   height: 5px;
   border-radius: 999px;
-  background: var(--waymark-gold);
-  box-shadow: 0 0 8px var(--waymark-gold);
+  background: var(--brand);
+  box-shadow: 0 0 8px var(--brand);
 }
 .eyebrow-chip.green .dot { background: var(--sygnalist-green); box-shadow: 0 0 8px var(--sygnalist-green); }
 
@@ -218,6 +219,16 @@ main {
 }
 .link-understated:hover {
   text-decoration-color: var(--accent);
+}
+
+/* External mark — top-right corner bracket. Matches .bracket motif. */
+.ext-mark {
+  transition: color 220ms ease, transform 220ms ease;
+}
+a:hover .ext-mark,
+a:focus-visible .ext-mark {
+  color: var(--accent);
+  transform: translate(1px, -1px);
 }
 
 /* Product chips — small inline badges for "built with claude" etc. */
@@ -265,7 +276,7 @@ main {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(1400px 700px at 50% 0%, rgba(232, 200, 96, 0.08), transparent 60%);
+  background: radial-gradient(1400px 700px at 50% 0%, rgba(204, 85, 0, 0.08), transparent 60%);
   z-index: 0;
 }
 .wash-thesis > * { position: relative; z-index: 1; }
@@ -280,7 +291,7 @@ main {
   pointer-events: none;
   background:
     radial-gradient(900px 500px at 0% 20%, rgba(106, 215, 163, 0.10), transparent 60%),
-    radial-gradient(900px 500px at 100% 80%, rgba(232, 200, 96, 0.10), transparent 60%);
+    radial-gradient(900px 500px at 100% 80%, rgba(204, 85, 0, 0.10), transparent 60%);
   z-index: 0;
 }
 .wash-work > * { position: relative; z-index: 1; }
@@ -308,7 +319,7 @@ main {
   pointer-events: none;
   background:
     radial-gradient(1000px 500px at 20% 60%, rgba(74, 202, 170, 0.10), transparent 60%),
-    radial-gradient(1000px 500px at 80% 40%, rgba(250, 215, 106, 0.08), transparent 60%);
+    radial-gradient(1000px 500px at 80% 40%, rgba(204, 85, 0, 0.08), transparent 60%);
   z-index: 0;
 }
 .wash-contact > * { position: relative; z-index: 1; }
@@ -325,7 +336,7 @@ main {
   left: 8%;
   right: 8%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(232, 200, 96, 0.55), rgba(106, 215, 163, 0.55), transparent);
+  background: linear-gradient(90deg, transparent, rgba(204, 85, 0, 0.55), rgba(106, 215, 163, 0.55), transparent);
 }
 
 /* Ghost numeral — massive Cinzel chapter mark faded into the far edge */
@@ -336,7 +347,7 @@ main {
   font-weight: 500;
   line-height: 0.8;
   letter-spacing: 0.02em;
-  background: linear-gradient(180deg, rgba(232, 200, 96, 0.12), rgba(232, 200, 96, 0.02));
+  background: linear-gradient(180deg, rgba(204, 85, 0, 0.12), rgba(204, 85, 0, 0.02));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -355,7 +366,7 @@ main {
   position: absolute;
   width: 18px;
   height: 18px;
-  border: 1px solid rgba(232, 200, 96, 0.4);
+  border: 1px solid rgba(204, 85, 0, 0.4);
 }
 .bracket::before {
   top: 0; left: 0;
@@ -380,7 +391,7 @@ main {
   left: 0;
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(106, 215, 163, 0.6), rgba(232, 200, 96, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(106, 215, 163, 0.6), rgba(204, 85, 0, 0.6), transparent);
   transform: translateX(-100%);
   animation: scan 8s ease-in-out infinite;
 }
@@ -388,6 +399,53 @@ main {
   0%, 20%   { transform: translateX(-100%); }
   50%       { transform: translateX(100%); }
   100%      { transform: translateX(100%); }
+}
+
+/* Mobile-only: scale down ambient effects so they don't overwhelm the viewport.
+   All rules here are gated behind max-width: 640px and do not affect desktop. */
+@media (max-width: 640px) {
+  body::before {
+    background:
+      radial-gradient(500px 360px at 12% 8%, rgba(106, 215, 163, 0.18), transparent 65%),
+      radial-gradient(560px 400px at 88% 14%, rgba(204, 85, 0, 0.22), transparent 65%),
+      radial-gradient(440px 340px at 50% 100%, rgba(74, 202, 170, 0.14), transparent 70%),
+      radial-gradient(rgba(204, 85, 0, 0.04) 1px, transparent 1px);
+    background-size: auto, auto, auto, 22px 22px;
+  }
+
+  .hero-glow::before {
+    inset: -60px -40px;
+    background:
+      radial-gradient(360px 200px at 20% 30%, rgba(106, 215, 163, 0.08), transparent 70%),
+      radial-gradient(420px 220px at 80% 60%, rgba(204, 85, 0, 0.1), transparent 70%);
+  }
+
+  .tint-sygnalist {
+    background:
+      radial-gradient(600px 360px at 15% 0%, rgba(106, 215, 163, 0.12), transparent 60%),
+      radial-gradient(500px 300px at 10% 80%, rgba(250, 215, 106, 0.06), transparent 60%),
+      linear-gradient(180deg, rgba(106, 215, 163, 0.025), transparent 40%);
+  }
+  .tint-waymark {
+    background:
+      radial-gradient(600px 360px at 85% 0%, rgba(232, 200, 96, 0.12), transparent 60%),
+      radial-gradient(500px 300px at 90% 80%, rgba(74, 202, 170, 0.06), transparent 60%),
+      linear-gradient(180deg, rgba(232, 200, 96, 0.025), transparent 40%);
+  }
+
+  .wash-work::before {
+    background:
+      radial-gradient(500px 320px at 0% 20%, rgba(106, 215, 163, 0.10), transparent 60%),
+      radial-gradient(500px 320px at 100% 80%, rgba(204, 85, 0, 0.10), transparent 60%);
+  }
+  .wash-how::before {
+    background: radial-gradient(600px 320px at 80% 50%, rgba(106, 215, 163, 0.08), transparent 60%);
+  }
+  .wash-contact::before {
+    background:
+      radial-gradient(560px 320px at 20% 60%, rgba(74, 202, 170, 0.10), transparent 60%),
+      radial-gradient(560px 320px at 80% 40%, rgba(204, 85, 0, 0.08), transparent 60%);
+  }
 }
 
 /* Phone frame — Waymark screens */

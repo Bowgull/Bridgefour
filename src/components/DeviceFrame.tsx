@@ -10,6 +10,7 @@ type Props = {
   url?: string;
   accent?: string;
   hideChrome?: boolean;
+  aspectRatio?: string;
 };
 
 export default function DeviceFrame({
@@ -20,6 +21,7 @@ export default function DeviceFrame({
   url = "sygnalist.co",
   accent,
   hideChrome = true,
+  aspectRatio = "780 / 1688",
 }: Props) {
   if (kind === "phone") {
     return (
@@ -41,7 +43,7 @@ export default function DeviceFrame({
           style={{
             position: "relative",
             width: "100%",
-            aspectRatio: "780 / 1688",
+            aspectRatio,
             borderRadius: 28,
             overflow: "hidden",
             background: "var(--waymark-bg)",
