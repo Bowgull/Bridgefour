@@ -4,6 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { DemoStep } from "@/content/projects";
 
+function useMobile() {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return mobile;
+}
+
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -17,6 +29,7 @@ type Props = {
 export default function DemoModal({ open, onClose, url, kind, title, accent, steps }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const [step, setStep] = useState(0);
+  const isMobile = useMobile();
 
   useEffect(() => {
     if (open) setStep(0);
@@ -163,11 +176,49 @@ export default function DemoModal({ open, onClose, url, kind, title, accent, ste
               </div>
             )}
 
-            {kind === "phone" ? <PhoneFrame url={url} accent={accent} title={title} /> : <BrowserFrame url={url} accent={accent} title={title} />}
+            {isMobile ? (
+              <MobileOpenButton url={url} accent={accent} title={title} />
+            ) : kind === "phone" ? (
+              <PhoneFrame url={url} accent={accent} title={title} />
+            ) : (
+              <BrowserFrame url={url} accent={accent} title={title} />
+            )}
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function MobileOpenButton({ url, accent, title }: { url: string | null; accent: string; title: string }) {
+  if (!url) return <DemoUnavailable accent={accent} />;
+  return (
+    <div className="flex flex-col items-center gap-5 px-4 py-6 w-full">
+      <p
+        className="mono text-center"
+        style={{ fontSize: 11, letterSpacing: "0.2em", color: "var(--foreground-muted)", textTransform: "uppercase" }}
+      >
+        Follow the steps above, then open the live demo
+      </p>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mono inline-flex items-center gap-3 px-6 py-3 border transition-colors duration-200"
+        style={{
+          color: accent,
+          borderColor: accent,
+          background: `${accent}0f`,
+          fontSize: 12,
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          textDecoration: "none",
+        }}
+      >
+        <span aria-hidden style={{ width: 7, height: 7, borderRadius: 999, background: accent, boxShadow: `0 0 8px ${accent}99` }} />
+        Open {title} demo →
+      </a>
+    </div>
   );
 }
 
